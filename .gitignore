@@ -1,0 +1,11 @@
+**/.DS_Store
+**/target
+**/.idea
+**/*.iml
+**/.classpath
+**/.project
+**/derby.log
+**/metastore_db
+**/*.tgz
+**/*.tar
+**/hiveMetaStore
