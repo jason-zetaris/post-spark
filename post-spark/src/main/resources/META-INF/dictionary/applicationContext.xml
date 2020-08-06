@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+    <context:property-placeholder location="classpath:meta_store.properties"/>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="fusionDBDataSource"/>
+        <property name="persistenceXmlLocation" value="classpath:META-INF/fusiondb/persistence.xml"/>
+        <property name="persistenceUnitName" value="fusionDBUnit" />
+        <property name="jpaProperties">
+            <map>
+                <entry key="hibernate.dialect" value="${hibernate.dialect}"/>
+                <entry key="hibernate.format_sql" value="true"/>
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"/>
+                <entry key="hibernate.default_schema" value="${hibernate.default_schema}"/>
+                <entry key="hibernate.show_sql" value="${hibernate.show_sql}"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--<bean id="fusionDBDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <bean id="fusionDBDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
+        <property name="driverClassName" value="${jdbc_driver_class}"/>
+        <property name="url" value="${jdbc_url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxTotal" value="${poolsize.maxTotal}"/>
+        <property name="initialSize" value="${poolsize.initialSize}"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="dataSourceDAO" class="com.zetaris.lightning.sql.jpa.dao.DataSourceDAOImpl">
+    </bean>
+
+    <bean id="dataSourceRelationDAO" class="com.zetaris.lightning.sql.jpa.dao.DataSourceRelationDAOImpl">
+    </bean>
+
+    <bean id="roleAndUserDAO" class="com.zetaris.lightning.sql.jpa.dao.RoleAndUserDAOImpl">
+    </bean>
+
+    <bean id="dataMartDAO" class="com.zetaris.lightning.sql.jpa.dao.DataMartDAOImpl">
+    </bean>
+
+    <bean id="dataWarehouseDAO" class="com.zetaris.lightning.sql.jpa.dao.DataWarehouseDAOImpl">
+    </bean>
+
+    <bean id="lightningDataBaseDAO" class="com.zetaris.lightning.sql.jpa.dao.LightningDataBaseDAOImpl">
+    </bean>
+
+    <bean id="lightningDataRelationBaseDAO" class="com.zetaris.lightning.sql.jpa.dao.LightningDataBaseRelationDAOImpl">
+    </bean>
+
+</beans>

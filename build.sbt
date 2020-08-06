@@ -28,19 +28,18 @@ lazy val sparkSqlDependencies = Seq(
   "org.apache.hadoop" % "hadoop-common" % hadoopVersion % "provided" force(),
   "org.apache.hadoop" % "hadoop-mapreduce-client-core" % hadoopVersion % "provided" force(),
 
-  "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-hive" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-hive-thriftserver" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-sql" % sparkVersion % "provided" withSources(),
+  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "provided" withSources(),
+  "org.apache.spark" %% "spark-hive" % sparkVersion % "provided" withSources(),
+  "org.apache.spark" %% "spark-hive-thriftserver" % sparkVersion % "provided" withSources(),
 
-  "org.apache.spark" %% "spark-core" % sparkVersion % "test" classifier "tests",
-  "org.apache.spark" %% "spark-sql" % sparkVersion % "test" classifier "tests",
-  "org.apache.spark" %% "spark-hive" % sparkVersion % "test" classifier "tests",
-  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "test" classifier "tests",
+  "org.apache.spark" %% "spark-core" % sparkVersion % "test" classifier "tests" withSources(),
+  "org.apache.spark" %% "spark-sql" % sparkVersion % "test" classifier "tests" withSources(),
+  "org.apache.spark" %% "spark-hive" % sparkVersion % "test" classifier "tests" withSources(),
+  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "test" classifier "tests" withSources(),
   "org.apache.derby" % "derby" % "10.12.1.1" % "provided",
   "org.apache.derby" % "derbynet" % "10.12.1.1" % "provided",
   "org.apache.derby" % "derbyclient" % "10.12.1.1" % "provided"
-
 )
 
 lazy val springHibernateDependencies = Seq(
@@ -50,7 +49,6 @@ lazy val springHibernateDependencies = Seq(
   "com.h2database" % "h2" % "1.4.191",
   "org.springframework" % "spring-test" % "4.1.7.RELEASE" % "test"
 )
-
 
 lazy val postSpark = project.in(file("post-spark")).
   settings(commonSettings: _*).
@@ -76,7 +74,6 @@ lazy val postSpark = project.in(file("post-spark")).
         buildInfoPackage := "com.jj.postspark"
       )
   )
-
 
 lazy val root = (project in file(".")).
   aggregate(postSpark).

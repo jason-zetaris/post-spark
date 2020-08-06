@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property>
+    <name>postspark.master.host</name>
+    <value>localhost</value>
+    <description>master postgresql</description>
+  </property>
+  <property>
+    <name>postspark.master.port</name>
+    <value>5432</value>
+  </property>
+  <property>
+    <name>postspark.user_name</name>
+    <value>postgres</value>
+  </property>
+  <property>
+    <name>postspark.password</name>
+    <value>postgres</value>
+  </property>
+
+  <property>
+    <name>postspark.slave.host</name>
+    <value>localhost,localhost</value>
+  </property>
+  <property>
+    <name>postspark.slave.port</name>
+    <value>5432,5432</value>
+  </property>
+</configuration>
