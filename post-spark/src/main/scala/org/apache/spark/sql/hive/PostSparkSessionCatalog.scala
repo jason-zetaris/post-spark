@@ -10,15 +10,17 @@ import org.apache.spark.sql.internal.{SQLConf, SessionState}
 import org.apache.spark.sql.{PostSparkExternalCatalog, SparkSession}
 import org.slf4j.LoggerFactory
 
-class PostSparkSessionCatalog(override val externalCatalog: PostSparkExternalCatalog,
+class PostSparkSessionCatalog(psExternalCatalog: PostSparkExternalCatalog,
                               val ss: SparkSession,
                               functionRegistry: FunctionRegistry,
                               conf: SQLConf,
                               sqlParser: ParserInterface,
                               resourceLoader: HiveSessionResourceLoader)
-  extends HiveSessionCatalog(() => externalCatalog, () => ss.sharedState.globalTempViewManager, new HiveMetastoreCatalog(ss), functionRegistry,
+  extends HiveSessionCatalog(() => psExternalCatalog, () => ss.sharedState.globalTempViewManager, new HiveMetastoreCatalog(ss), functionRegistry,
     conf, SessionState.newHadoopConf(ss.sparkContext.hadoopConfiguration, conf), sqlParser, resourceLoader){
   val LOGGER = LoggerFactory.getLogger(getClass)
+
+  override lazy val externalCatalog = psExternalCatalog
 
   override def lookupRelation(name: TableIdentifier): LogicalPlan = {
     ???

@@ -82,7 +82,10 @@ lazy val root = (project in file(".")).
   settings(publishSettings: _*).
   settings(
     name := "jj-postspark",
-    aggregate in update := false
+    aggregate in update := false,
+    libraryDependencies ++= Seq(
+      "com.jj" %% "post-spark" % version.value
+    )
   ).
   dependsOn(postSpark)
 

@@ -11,4 +11,6 @@ abstract class PostSparkCommand extends RunnableCommand {
     val pss = sparkSession.asInstanceOf[PostSparkSession]
     hookCommand(pss)
   }
+
+  def runDML(dml: String): Int = ???
 }

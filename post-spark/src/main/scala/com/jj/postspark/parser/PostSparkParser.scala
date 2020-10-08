@@ -1,6 +1,6 @@
 
 package com.jj.postspark.parser
-import com.jj.postspark.sql.Select
+import com.jj.postspark.sql.{AlterTable, CreateTable, DropTable, Insert, Select}
 import org.apache.spark.sql.catalyst.TableIdentifier
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 
@@ -17,19 +17,25 @@ class PostSparkParser extends ParserBase with PostSparkKeyword {
 
   protected lazy val createTable: Parser[LogicalPlan] = {
     CREATE ~> TABLE ~> tableIdentifier ~ wholeInput ^^ {
-      case table ~ query => Select(table, query)
+      case table ~ query => CreateTable(table, query)
     }
   }
 
   protected lazy val alterTable: Parser[LogicalPlan] = {
     ALTER ~> TABLE ~> tableIdentifier ~ wholeInput ^^ {
-      case table ~ query => ???
+      case table ~ query => AlterTable(table, query)
     }
   }
 
   protected lazy val dropTable: Parser[LogicalPlan] = {
     DROP ~> TABLE ~> tableIdentifier ~ wholeInput ^^ {
-      case table ~ query => ???
+      case table ~ query => DropTable(table, query)
+    }
+  }
+
+  protected lazy val insert: Parser[LogicalPlan] = {
+    INSERT ~> INTO ~> tableIdentifier ~ wholeInput ^^ {
+      case table ~ query => Insert(table, query)
     }
   }
 }

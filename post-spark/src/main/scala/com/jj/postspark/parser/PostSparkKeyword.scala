@@ -16,4 +16,6 @@ trait PostSparkKeyword {
   protected val DROP = Keyword("DROP")
   protected val TABLE = Keyword("TABLE")
 
+  protected val INTO = Keyword("INTO")
+
 }

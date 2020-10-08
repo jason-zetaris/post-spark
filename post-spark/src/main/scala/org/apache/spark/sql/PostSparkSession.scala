@@ -8,6 +8,8 @@ class PostSparkSession(@transient override val sparkContext: SparkContext,
                        @transient private val existingSharedState: Option[SharedState],
                        @transient private val parentSessionState: Option[SessionState]) extends SparkSession(sparkContext) {
   override lazy val sharedState: SharedState = {
-    existingSharedState.getOrElse(new PostSparkSharedState(sparkContext, initialSessionOptions))
+    existingSharedState.getOrElse(new PostSparkSharedState(this, initialSessionOptions))
   }
+
+  def runDML(dml: String): Unit = ???
 }
